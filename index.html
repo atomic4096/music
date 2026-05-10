@@ -32,15 +32,17 @@
 
 <script>
   // GitHub raw URL を貼る（ここを差し替えるだけ）
+  const base = "https://raw.githubusercontent.com/atomic4096/music/main/";
+
   const soundURLs = {
-    1: "https://raw.githubusercontent.com/atomic4096/music/main/① ストレッチ.mp3",
-    2: "https://raw.githubusercontent.com/atomic4096/music/main/② 外周.mp3",
-    3: "https://raw.githubusercontent.com/atomic4096/music/main/③ 1分スピン.mp3",
-    4: "https://raw.githubusercontent.com/atomic4096/music/main/④ 足出し足着きスピン.mp3",
-    5: "https://raw.githubusercontent.com/atomic4096/music/main/⑤ アイドリング・8の字.mp3",
-    6: "https://raw.githubusercontent.com/atomic4096/music/main/⑥ 乗り技.mp3",
-    7: "https://raw.githubusercontent.com/atomic4096/music/main/⑦ 振り練.mp3",
-    8: "https://raw.githubusercontent.com/atomic4096/music/main/⑧ 30秒スピン.mp3"
+    1: base + "stretch.mp3",
+    2: base + "outer_loop.mp3",
+    3: base + "spin_1min.mp3",
+    4: base + "leg_spin.mp3",
+    5: base + "idling_figure8.mp3",
+    6: base + "trick_riding.mp3",
+    7: base + "swing_practice.mp3",
+    8: base + "spin_30sec.mp3"
   };
 
   // Audio を事前に読み込む（遅延防止）
