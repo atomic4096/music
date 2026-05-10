@@ -6,36 +6,48 @@
 <style>
   body {
     font-family: sans-serif;
-    background: #f4f4f4; /* 明るい背景で見やすい */
+    background: #000;
     margin: 0;
     padding: 20px;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
+    gap: 18px;
   }
 
   button {
     padding: 20px;
     font-size: 22px;
     width: 100%;
-    height: 110px;
+    height: 115px;
     border-radius: 14px;
-    border: 3px solid #FFD700; /* 金の枠線 */
-    background: #D32F2F; /* 明るめの赤 */
-    color: #fff; /* 白文字で視認性UP */
+    border: 3px solid #FFD700;
+    background: #E53935;
+    color: #fff;
     font-weight: bold;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 10px rgba(255, 0, 0, 0.25);
     transition: 0.1s;
   }
 
   button:active {
     transform: scale(0.96);
-    background: #8B0000; /* 暗い赤で押した感 */
+    background: #B71C1C;
+  }
+
+  /* 停止・再開ボタンは色を変える */
+  .control {
+    background: #444;
+    border: 3px solid #FFD700;
+    color: #FFD700;
+  }
+
+  .control:active {
+    background: #222;
   }
 </style>
 </head>
 <body>
 
+<!-- 再生ボタン -->
 <button data-sound="1">ストレッチ</button>
 <button data-sound="2">外周</button>
 <button data-sound="3">1分スピン</button>
@@ -44,6 +56,10 @@
 <button data-sound="6">乗り技</button>
 <button data-sound="7">振り練</button>
 <button data-sound="8">30秒スピン</button>
+
+<!-- 停止・再開ボタン -->
+<button id="pauseBtn" class="control">一時停止</button>
+<button id="resumeBtn" class="control">再開</button>
 
 <script>
   const base = "https://raw.githubusercontent.com/atomic4096/music/main/";
@@ -60,21 +76,40 @@
   };
 
   const audios = {};
+  let currentPlaying = null;
+
   for (let i = 1; i <= 8; i++) {
     audios[i] = new Audio(soundURLs[i]);
   }
 
-  document.querySelectorAll("button").forEach(btn => {
+  // 再生ボタン
+  document.querySelectorAll("button[data-sound]").forEach(btn => {
     btn.addEventListener("click", () => {
-      const id = btn.dataset.sound;
+      const id = Number(btn.dataset.sound);
 
+      // 他の音を止める
       for (let i = 1; i <= 8; i++) {
         audios[i].pause();
         audios[i].currentTime = 0;
       }
 
       audios[id].play();
+      currentPlaying = id;
     });
+  });
+
+  // 一時停止ボタン
+  document.getElementById("pauseBtn").addEventListener("click", () => {
+    if (currentPlaying !== null) {
+      audios[currentPlaying].pause();
+    }
+  });
+
+  // 再開ボタン
+  document.getElementById("resumeBtn").addEventListener("click", () => {
+    if (currentPlaying !== null) {
+      audios[currentPlaying].play();
+    }
   });
 </script>
 
