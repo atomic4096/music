@@ -6,16 +6,31 @@
 <style>
   body {
     font-family: sans-serif;
+    background: #f4f4f4; /* 明るい背景で見やすい */
+    margin: 0;
     padding: 20px;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 16px;
   }
+
   button {
     padding: 20px;
-    font-size: 20px;
+    font-size: 22px;
     width: 100%;
-    height: 100px;
+    height: 110px;
+    border-radius: 14px;
+    border: 3px solid #FFD700; /* 金の枠線 */
+    background: #D32F2F; /* 明るめの赤 */
+    color: #fff; /* 白文字で視認性UP */
+    font-weight: bold;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+    transition: 0.1s;
+  }
+
+  button:active {
+    transform: scale(0.96);
+    background: #8B0000; /* 暗い赤で押した感 */
   }
 </style>
 </head>
@@ -31,7 +46,6 @@
 <button data-sound="8">30秒スピン</button>
 
 <script>
-  // GitHub raw URL（あなたのリポジトリに完全対応）
   const base = "https://raw.githubusercontent.com/atomic4096/music/main/";
 
   const soundURLs = {
@@ -45,19 +59,21 @@
     8: base + "spin_30sec.mp3"
   };
 
-  // Audio を事前に読み込む（遅延防止）
   const audios = {};
   for (let i = 1; i <= 8; i++) {
     audios[i] = new Audio(soundURLs[i]);
   }
 
-  // ボタンにイベントを付与
   document.querySelectorAll("button").forEach(btn => {
     btn.addEventListener("click", () => {
       const id = btn.dataset.sound;
-      const audio = audios[id];
-      audio.currentTime = 0; // 連打対応
-      audio.play();
+
+      for (let i = 1; i <= 8; i++) {
+        audios[i].pause();
+        audios[i].currentTime = 0;
+      }
+
+      audios[id].play();
     });
   });
 </script>
