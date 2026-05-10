@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>練習メニュー音出し</title>
+<style>
+  body {
+    font-family: sans-serif;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  button {
+    padding: 20px;
+    font-size: 20px;
+    width: 100%;
+    height: 100px;
+  }
+</style>
+</head>
+<body>
+
+<button data-sound="1">ストレッチ</button>
+<button data-sound="2">外周</button>
+<button data-sound="3">1分スピン</button>
+<button data-sound="4">足出し足着きスピン</button>
+<button data-sound="5">アイドリング・8の字</button>
+<button data-sound="6">乗り技</button>
+<button data-sound="7">振り練</button>
+<button data-sound="8">30秒スピン</button>
+
+<script>
+  // GitHub raw URL を貼る（ここを差し替えるだけ）
+  const soundURLs = {
+    1: "https://raw.githubusercontent.com/atomic4096/music/main/① ストレッチ.mp3",
+    2: "https://raw.githubusercontent.com/atomic4096/music/main/② 外周.mp3",
+    3: "https://raw.githubusercontent.com/atomic4096/music/main/③ 1分スピン.mp3",
+    4: "https://raw.githubusercontent.com/atomic4096/music/main/④ 足出し足着きスピン.mp3",
+    5: "https://raw.githubusercontent.com/atomic4096/music/main/⑤ アイドリング・8の字.mp3",
+    6: "https://raw.githubusercontent.com/atomic4096/music/main/⑥ 乗り技.mp3",
+    7: "https://raw.githubusercontent.com/atomic4096/music/main/⑦ 振り練.mp3",
+    8: "https://raw.githubusercontent.com/atomic4096/music/main/⑧ 30秒スピン.mp3"
+  };
+
+  // Audio を事前に読み込む（遅延防止）
+  const audios = {};
+  for (let i = 1; i <= 8; i++) {
+    audios[i] = new Audio(soundURLs[i]);
+  }
+
+  // ボタンにイベントを付与
+  document.querySelectorAll("button").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const id = btn.dataset.sound;
+      const audio = audios[id];
+      audio.currentTime = 0; // 連打対応
+      audio.play();
+    });
+  });
+</script>
+
+</body>
+</html>
