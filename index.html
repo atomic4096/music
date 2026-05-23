@@ -20,13 +20,14 @@
     gap: 20px;
   }
 
-  button {
+  /* アイコン（練習メニュー） */
+  .menu-btn {
     padding: 25px;
-    font-size: 28px;
+    font-size: 36px; /* ← 文字もっと大きく */
     width: 100%;
-    height: 150px;
-    border-radius: 16px;
-    border: 3px solid #FFD700;
+    height: 180px;   /* ← アイコンもっと大きく */
+    border-radius: 20px;
+    border: 4px solid #FFD700;
     background: #E53935;
     color: #fff;
     font-weight: bold;
@@ -34,25 +35,35 @@
     transition: 0.1s;
   }
 
-  button:active {
+  .menu-btn:active {
     transform: scale(0.95);
     background: #B71C1C;
   }
 
-  /* 一時停止・再開ボタン */
+  /* 下の操作ボタン（1列にする） */
+  .control-area {
+    grid-column: span 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;
+    gap: 20px;
+  }
+
   .control {
+    width: 60%;
+    height: 120px;
+    font-size: 50px;
+    border-radius: 20px;
+    border: 4px solid #FFD700;
     background: #444;
-    border: 3px solid #FFD700;
     color: #FFD700;
-    font-size: 45px;
   }
 
   /* リピートボタン */
   #repeatBtn {
     background: #333;
-    border: 3px solid #FFD700;
     color: #FFD700;
-    font-size: 40px;
   }
 
   #repeatBtn.active {
@@ -63,20 +74,22 @@
 </head>
 <body>
 
-<!-- 基礎練習8曲 -->
-<button data-sound="1">ストレッチ</button>
-<button data-sound="2">外周</button>
-<button data-sound="3">1分スピン</button>
-<button data-sound="4">足出し足着きスピン</button>
-<button data-sound="5">アイドリング・8の字</button>
-<button data-sound="6">乗り技</button>
-<button data-sound="7">振り練</button>
-<button data-sound="8">30秒スピン</button>
+<!-- 2×4 のアイコン配置 -->
+<button class="menu-btn" data-sound="1">ストレッチ</button>
+<button class="menu-btn" data-sound="2">外周</button>
+<button class="menu-btn" data-sound="3">1分スピン</button>
+<button class="menu-btn" data-sound="4">足出し足着き</button>
+<button class="menu-btn" data-sound="5">アイドリング</button>
+<button class="menu-btn" data-sound="6">乗り技</button>
+<button class="menu-btn" data-sound="7">振り練</button>
+<button class="menu-btn" data-sound="8">30秒スピン</button>
 
-<!-- リピート・一時停止・再開 -->
-<button id="repeatBtn">🔁</button>
-<button id="pauseBtn" class="control">⏸</button>
-<button id="resumeBtn" class="control">▶</button>
+<!-- 再生・停止・リピート（縦1列） -->
+<div class="control-area">
+  <button id="resumeBtn" class="control">▶</button>
+  <button id="pauseBtn" class="control">⏸</button>
+  <button id="repeatBtn" class="control">🔁</button>
+</div>
 
 <script>
   const base = "https://raw.githubusercontent.com/atomic4096/music/main/";
@@ -101,7 +114,7 @@
   }
 
   // 再生ボタン
-  document.querySelectorAll("button[data-sound]").forEach(btn => {
+  document.querySelectorAll(".menu-btn").forEach(btn => {
     btn.addEventListener("click", () => {
       const id = Number(btn.dataset.sound);
 
@@ -115,6 +128,16 @@
       currentPlaying.loop = repeatMode;
       currentPlaying.play();
     });
+  });
+
+  // 一時停止
+  document.getElementById("pauseBtn").addEventListener("click", () => {
+    if (currentPlaying) currentPlaying.pause();
+  });
+
+  // 再開
+  document.getElementById("resumeBtn").addEventListener("click", () => {
+    if (currentPlaying) currentPlaying.play();
   });
 
   // リピート切り替え
@@ -131,16 +154,6 @@
     if (currentPlaying) {
       currentPlaying.loop = repeatMode;
     }
-  });
-
-  // 一時停止
-  document.getElementById("pauseBtn").addEventListener("click", () => {
-    if (currentPlaying) currentPlaying.pause();
-  });
-
-  // 再開
-  document.getElementById("resumeBtn").addEventListener("click", () => {
-    if (currentPlaying) currentPlaying.play();
   });
 
   // Service Worker 登録
