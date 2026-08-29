@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <title>練習メニュー音出し</title>
 
-<!-- PWA設定 -->
 <link rel="manifest" href="manifest.json">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -15,13 +14,12 @@
     background: #000;
     margin: 0;
     padding: 20px;
-    padding-bottom: 260px; /* ← 下の固定ボタンのスペース確保 */
+    padding-bottom: 260px;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
   }
 
-  /* アイコン（練習メニュー） */
   .menu-btn {
     padding: 25px;
     font-size: 36px;
@@ -32,8 +30,6 @@
     background: #E53935;
     color: #fff;
     font-weight: bold;
-    box-shadow: 0 4px 12px rgba(255, 0, 0, 0.25);
-    transition: 0.1s;
   }
 
   .menu-btn:active {
@@ -41,7 +37,18 @@
     background: #B71C1C;
   }
 
-  /* 下固定の操作ボタン */
+  /* 練習メニューボタン（特別デザイン） */
+  .nav-btn {
+    grid-column: span 2;
+    height: 150px;
+    font-size: 40px;
+    background: #FFD700;
+    color: #000;
+    border-radius: 20px;
+    border: 4px solid #E53935;
+    font-weight: bold;
+  }
+
   .control-area {
     position: fixed;
     bottom: 20px;
@@ -63,7 +70,6 @@
     color: #FFD700;
   }
 
-  /* リピートボタン */
   #repeatBtn {
     background: #333;
     color: #FFD700;
@@ -77,17 +83,19 @@
 </head>
 <body>
 
-<!-- 2×4 のアイコン配置 -->
+<!-- 練習メニューへ移動 -->
+<button class="nav-btn" onclick="location.href='menu.html'">練習メニュー</button>
+
+<!-- 2×4 の音源ボタン -->
 <button class="menu-btn" data-sound="1">ストレッチ</button>
 <button class="menu-btn" data-sound="2">外周</button>
-<button class="menu-btn" data-sound="3">1分スピン</button>
+<button class="menu-btn" data-sound="3">1分スピン/プランク/ブリッジ</button>
 <button class="menu-btn" data-sound="4">足出し足着き</button>
-<button class="menu-btn" data-sound="5">アイドリング</button>
+<button class="menu-btn" data-sound="5">アイドリング/ピルエット</button>
 <button class="menu-btn" data-sound="6">乗り技</button>
 <button class="menu-btn" data-sound="7">振り練</button>
 <button class="menu-btn" data-sound="8">30秒スピン</button>
 
-<!-- 下固定の操作ボタン -->
 <div class="control-area">
   <button id="resumeBtn" class="control">▶</button>
   <button id="pauseBtn" class="control">⏸</button>
@@ -116,12 +124,10 @@
     audios[i] = new Audio(soundURLs[i]);
   }
 
-  // 再生ボタン
   document.querySelectorAll(".menu-btn").forEach(btn => {
     btn.addEventListener("click", () => {
       const id = Number(btn.dataset.sound);
 
-      // 他の音を止める
       for (let i = 1; i <= 8; i++) {
         audios[i].pause();
         audios[i].currentTime = 0;
@@ -133,33 +139,21 @@
     });
   });
 
-  // 一時停止
   document.getElementById("pauseBtn").addEventListener("click", () => {
     if (currentPlaying) currentPlaying.pause();
   });
 
-  // 再開
   document.getElementById("resumeBtn").addEventListener("click", () => {
     if (currentPlaying) currentPlaying.play();
   });
 
-  // リピート切り替え
   document.getElementById("repeatBtn").addEventListener("click", () => {
     repeatMode = !repeatMode;
-
     const btn = document.getElementById("repeatBtn");
-    if (repeatMode) {
-      btn.classList.add("active");
-    } else {
-      btn.classList.remove("active");
-    }
-
-    if (currentPlaying) {
-      currentPlaying.loop = repeatMode;
-    }
+    btn.classList.toggle("active", repeatMode);
+    if (currentPlaying) currentPlaying.loop = repeatMode;
   });
 
-  // Service Worker 登録
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("service-worker.js");
   }
