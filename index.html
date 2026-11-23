@@ -96,7 +96,7 @@
 <button class="menu-btn" data-sound="7">乗り技</button>
 <button class="menu-btn" data-sound="8">振り練(アベマリア)</button>
 <button class="menu-btn" data-sound="9">クイック(Kolibre)</button>
-<button class="menu-btn" data-sound="10">　</button>
+<button class="menu-btn" disabled>　</button>
 <button class="menu-btn" data-sound="11">Icebreaker</button>
 <button class="menu-btn" data-sound="12">フレア</button>
 
@@ -117,9 +117,9 @@
     5: base + "idling_figure8.mp3",
     6: base + "trick_riding.mp3",
     7: base + "swing_practice.mp3",
-    8: base + "leg_spin.mp3"
-　　9: base + "Kolibre.mp3"  
-　　11: base + "Icebreaker.mp3"
+    8: base + "leg_spin.mp3",
+　　9: base + "Kolibre.mp3",
+　　11: base + "Icebreaker.mp3",
 　　12: base + "FLARE.mp3"
 };
 
@@ -127,18 +127,18 @@
   let currentPlaying = null;
   let repeatMode = false;
 
-  for (let i = 1; i <= 8; i++) {
-    audios[i] = new Audio(soundURLs[i]);
-  }
+ for (const id in soundURLs) {
+  audios[id] = new Audio(soundURLs[id]);
+}
 
   document.querySelectorAll(".menu-btn").forEach(btn => {
     btn.addEventListener("click", () => {
       const id = Number(btn.dataset.sound);
 
-      for (let i = 1; i <= 8; i++) {
-        audios[i].pause();
-        audios[i].currentTime = 0;
-      }
+     for (const id in audios) {
+  audios[id].pause();
+  audios[id].currentTime = 0;
+}
 
       currentPlaying = audios[id];
       currentPlaying.loop = repeatMode;
