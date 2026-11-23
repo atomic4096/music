@@ -8,83 +8,102 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
+
 <style>
-  body {
-    font-family: sans-serif;
-    background: #000;
-    margin: 0;
-    padding: 20px;
-    padding-bottom: 260px;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-  }
+body{
+  font-family:sans-serif;
+  background:#000;
+  margin:0;
+  padding:20px;
+  padding-bottom:260px;
 
-  .menu-btn {
-    padding: 25px;
-    font-size: 36px;
-    width: 100%;
-    height: 180px;
-    border-radius: 20px;
-    border: 4px solid #FFD700;
-    background: #E53935;
-    color: #fff;
-    font-weight: bold;
-  }
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:20px;
+}
 
-  .menu-btn:active {
-    transform: scale(0.95);
-    background: #B71C1C;
-  }
+.top-nav{
+  grid-column:span 2;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+}
 
-  /* 練習メニューボタン（特別デザイン） */
-  .nav-btn {
-    grid-column: span 2;
-    height: 150px;
-    font-size: 40px;
-    background: #FFD700;
-    color: #000;
-    border-radius: 20px;
-    border: 4px solid #E53935;
-    font-weight: bold;
-  }
+.nav-btn{
+  height:150px;
+  font-size:40px;
+  border-radius:20px;
+  border:4px solid #E53935;
+  font-weight:bold;
+}
 
-  .control-area {
-    position: fixed;
-    bottom: 20px;
-    left: 0;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 18px;
-  }
+.practice-btn{
+  background:#FFD700;
+  color:#000;
+}
 
-  .control {
-    width: 60%;
-    height: 110px;
-    font-size: 50px;
-    border-radius: 20px;
-    border: 4px solid #FFD700;
-    background: #444;
-    color: #FFD700;
-  }
+.performance-btn{
+  background:#2196F3;
+  color:#fff;
+  border-color:#90CAF9;
+}
 
-  #repeatBtn {
-    background: #333;
-    color: #FFD700;
-  }
+.menu-btn{
+  padding:25px;
+  font-size:36px;
+  width:100%;
+  height:180px;
 
-  #repeatBtn.active {
-    background: #FFD700;
-    color: #000;
-  }
+  border-radius:20px;
+  border:4px solid #FFD700;
+
+  background:#E53935;
+  color:#fff;
+  font-weight:bold;
+}
+
+.menu-btn:active{
+  transform:scale(0.95);
+  background:#B71C1C;
+}
+
+.menu-btn:disabled{
+  background:#333;
+  border-color:#666;
+  color:#666;
+}
+
+.control-area{
+  position:fixed;
+  bottom:20px;
+  left:0;
+  width:100%;
+
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:18px;
+}
+
+.control{
+  width:60%;
+  height:110px;
+  font-size:50px;
+
+  border-radius:20px;
+  border:4px solid #FFD700;
+
+  background:#444;
+  color:#FFD700;
+}
+
 </style>
 </head>
 <body>
 
 <!-- 練習メニューへ移動 -->
 <button class="nav-btn" onclick="location.href='menu.html'">練習メニュー</button>
+<button class="nav-btn" onclick="location.href='performance.html'">演技用</button>
 
 <!-- 2×4 の音源ボタン -->
 <button class="menu-btn" data-sound="1">ストレッチ</button>
